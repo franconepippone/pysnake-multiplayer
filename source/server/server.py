@@ -5,8 +5,8 @@ import pickle
 import threading
 import socket
 
-
-with open('../levels/level.json') as f:
+# select level
+with open('levels/level.json') as f:
 	world = json.load(f)
 
 env = Snake.environment(19, 11, repeat = True, world = world, tilesize = 50)
