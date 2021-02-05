@@ -10,7 +10,7 @@ with open('configs.json') as f:
 	cfgs = json.load(f)
 print("Configurazioni caricate.")
 
-# inizializzazione pygame e finestra
+# init pygame and window
 WIDTH, HEIGHT = cfgs["width"], cfgs["height"]
 OFFW, OFFH = WIDTH//2, HEIGHT//2
 
