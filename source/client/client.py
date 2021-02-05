@@ -12,10 +12,10 @@ print("Starting...")
 
 with open('configs.json','r') as f:
 	cfgs = json.load(f)
-print("Configurazioni caricate.")
+print("Configs loaded.")
 
 s = socket.socket()
-print("Socket create.")
+print("Socket created.")
 
 chunksize = cfgs['net']['chunk_size']
 errsize = cfgs['net']['errsize']
@@ -41,7 +41,6 @@ def recvall(size, chunk=chunksize):
 		empty(s)
 		size = 0
 	while len(data) < size:
-		print(size, len(data))
 		data += s.recv(chunk)
 	return data
 
@@ -53,17 +52,15 @@ def connect():
 	except ConnectionRefusedError as e:
 		print("Server unavailable.", e)
 		return False
-	print(f"Connessione a {cfgs['host']} riuscita.")
+	print(f"Connection to {cfgs['host']} successfull.")
 
-	#with lock:
-	print("Lock acquisito.")
 	data = s.recv(10000)
 	time.sleep(.1)
-	print("Dati di inizializzazione ricevuti.")
+	print("Initial data received.")
 	start_env = pickle.loads(data)
-	print("Ambiente caricato.")
+	print("Environment loaded.")
 	env = Snake.environment(start_env)
-	print("Mondo di gioco creato.")
+	print("Game world created.")
 	return True
 
 def quit():
@@ -104,7 +101,6 @@ def update_env(lock):
 
 		with lock:
 			env.storenew(data)
-		print("ENDUPDATE")
 
 
 def main():
@@ -114,7 +110,7 @@ def main():
 		time.sleep(5) # Attempt connection to server
 	gui.init()
 	print("Gui inizializzata.")
-	# starts app threads
+	# starts app thread
 	t1 = threading.Thread(target = update_env, args= (lock,))
 	t1.start()
 
